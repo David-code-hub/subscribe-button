@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Subscribe Button with Django</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
+</head>
+<body>
+
+<div class="ui container">
+	<h2 class="ui header">
+	  <img src="https://lh3.googleusercontent.com/a-/AOh14GhlsY15JiS6ks71zRbE_fpzpDO88DAK47v5TeAe=s600-k-no-rp-mo" class="ui circular image">
+	  DjangoForBeginners
+	</h2>
+	<p><b>Subscribers <span id="count"></span></b></p>
+	<p>The purpose of this channel is to help developers who are just getting into django. I remember struggling with django at first and would like to make the learning journey easier for someone else.</p>
+	<div class="ui horizontal divider">
+    Content
+  </div>
+  	<center>
+	  <button class="ui youtube button massive" id="sub_btn" onclick="addsub()">
+	  Subscribe
+		</button>
+	</center>
+</div>
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+<script>
+var subcounter = document.getElementById('count')
+sub_button = document.getElementById('sub_btn')
+subscriber_added = []
+
+function addsub(){
+	sub_button.classList.add('loading')
+	axios
+	.get('/add-sub/1/')
+	.then(response =>{
+			this.response = response.data;
+			sub_button.innerHTML =  this.response;
+			loadsub()
+			sub_button.classList.remove('loading')
+	})
+}
+
+function loadsub(){
+	axios
+	.get('/sub-load/1/')
+	.then(response =>{
+			this.response = response.data;
+			subscriber_added = this.response
+			subcounter.innerHTML = subscriber_added.length
+
+	})
+}
+
+window.onload = loadsub;
+</script>
+</html>
